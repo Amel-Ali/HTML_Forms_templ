@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My templates</title>
+    <!--ovo je za bolji rendering i touch-zooming-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--ovo je za bosanska slova-->
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <!-- bootstrap CDN link for CSS (brzi nego bootstrap file)-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- jQuery CDN link (brzi nego file) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <!--moj CSS-->
+    <link rel="stylesheet" href="myTestCSS.css">
+    <!-- alat za provjeru da li browser podrzava HTML5 -->
+    <script src="modernizr-custom.js"></script>
+</head>
+
+<body>
+
+    <!-- 
+
+    This document contains:
+
+*** Check if HTML5 is supported
+*** Clean form
+*** Login
+*** Register
+*** Stars rating
+*** Password length validator
+*** Password strength validator
+*** Password length and strength validator
+
+    -->
+
+
+    <!-- HTML Templates -->
+    <!-- HTML Templates -->
+    <!-- HTML Templates -->
+
+    <!-- *************** Check if HTML5 is supported *************** -->
+    <h2>Check if supported</h2>
+
+    <script>
+        var supportsHTML5;
+        if (Modernizr.formvalidation) {
+            supportsHTML5 = true;
+        } else {
+            supportsHTML5 = false;
+        }
+
+    </script>
+
+    <script>
+        if (supportsHTML5) {
+            //if HTML5 supported
+            document.write('insert your complete form here');
+        } else {
+            //if NOT supported write your form here           
+            document.write('insert your complete no-HTML5 form here');
+        }
+
+    </script>
+
+
+
+    <!-- ***************** Clean form ***************** -->
+    <h2>Clean form</h2>
+    <form action="" method="">
+        <input type="" name="" placeholder="">
+        <textarea rows="5" cols="50" name="" placeholder="" required></textarea>
+
+        <input type="submit" name="">
+    </form>
+
+
+    <!-- ***************** Login ***************** -->
+    <h2>Login form</h2>
+
+    <form action="Login" method="post">
+        <!--'required' is HTML5 and works only on newer browsers -->
+        <label>username or email</label>
+        <input type="text" name="emailOrUsername" placeholder="email or username" required>
+        <label>username</label>
+        <input type="text" name="username" placeholder="username" required>
+        <!-- email has a bug, can not receive čćžšđ and also-->
+        <!-- myUsername@čćžšđ saves as myUsername@someCrazyCode -->
+        <label>email</label>
+        <input type="email" name="email" placeholder="email" required>
+        <label>password</label>
+        <input type="password" name="password" placeholder="password" required>
+
+        <input type="submit" name="Login">
+    </form>
+
+
+
+
+    <!-- ***************** Register ***************** -->
+    <h2>Register form</h2>
+
+    <form action="Register" method="post">
+        <!--'required' is HTML5 and works only on newer browsers -->
+        <input type="email" name="email" placeholder="email" required>
+        <input type="text" name="username" placeholder="username" required>
+        <input type="password" name="password" placeholder="password" required>
+
+        <input type="submit" name="Register">
+    </form>
+
+
+    <!-- ***************** Stars rating ***************** -->
+    <h2>Stars rating</h2>
+
+    <style>
+        .rating {
+            float: left;
+            width: 300px;
+        }
+        
+        .rating span {
+            float: right;
+            position: relative;
+        }
+        
+        .rating span input {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            opacity: 0;
+        }
+        
+        .rating span label {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            color: #FFF;
+            background-image: url(starWhite.png);
+            background-position: center;
+            background-size: contain;
+            font-size: 30px;
+            margin-right: 2px;
+        }
+        
+        .rating span:hover ~ span label,
+        .rating span:hover label,
+        .rating span.checked label,
+        .rating span.checked ~ span label {
+            background-image: url(starOrange.png);
+            background-position: center;
+            background-size: contain;
+            color: #FFF;
+        }
+
+    </style>
+
+
+    <script>
+        $(document).ready(function() {
+            //  Check Radio-box
+            $(".rating input:radio").attr("checked", false);
+            $('.rating input').click(function() {
+                $(".rating span").removeClass('checked');
+                $(this).parent().addClass('checked');
+            });
+
+            $('input:radio').change(
+                function() {
+                    var form = document.getElementById("videoRating");
+                    form.submit();
+                }
+            );
+        });
+
+    </script>
+
+    <div class="ratingBox" style="width: 300px; height: 100px; border: solid;">
+        <div class="rating">
+            <form action="RateVideo" method="get" id="videoRating">
+                <span><input type="radio" name="rating" id="str5" value="5"><label for="str5">o</label></span>
+                <span><input type="radio" name="rating" id="str4" value="4"><label for="str4"></label></span>
+                <span><input type="radio" name="rating" id="str3" value="3"><label for="str3"></label></span>
+                <span><input type="radio" name="rating" id="str2" value="2"><label for="str2"></label></span>
+                <span><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
+                <input type="hidden" name="videoId" value="">
+            </form>
+        </div>
+    </div>
+    <!-- ***************** Stars END ****************** -->
+
+    <!-- ***************** Password length validator ***************** -->
+    <h2>Password length check (button enable/disable)</h2>
+
+    <input type="password" name="myPassword" id="myPassword">
+    <p class="myTooltiptextInvisib" id="myTooltip"></p>
+    <input type="submit" value="send" id="submitPassw">
+    <!-- it works also for <button type="submit"> -->
+
+    <script>
+        //enable disable button
+        $(document).ready(function() {
+            $(':input[id="submitPassw"]').prop('disabled', true);
+            $('input[name="myPassword"]').keyup(function() {
+                var text = $(this).val();
+                if (text.length > 7 && text.length < 31) {
+                    $(':input[id="submitPassw"]').prop('disabled', false)
+                } else {
+                    $(':input[id="submitPassw"]').prop('disabled', true);
+                }
+            });
+        });
+
+        //show user password info
+        $(document).ready(function() {
+            $("input").keyup(function() {
+                $('#myTooltip').html(checkPassw($('#myPassword').val()))
+            }); //keyup end
+
+            function checkPassw(myPassword) {
+                var textLength = myPassword.length;
+                if (textLength > 0 && textLength < 8) {
+                    $("#myTooltip").removeClass();
+                    $("#myTooltip").addClass("myTooltiptextVisib");
+                    return 'min. 8 characters';
+                } else if (textLength > 30) {
+                    $("#myTooltip").removeClass();
+                    $("#myTooltip").addClass("myTooltiptextVisib");
+                    return 'max. 30 characters';
+                } else {
+                    $("#myTooltip").removeClass();
+                    $("#myTooltip").addClass("myTooltiptextInvisib");
+                }
+            } //function end
+
+        }); //document end
+
+    </script>
+
+
+    <style>
+        /* Tooltip text */
+        
+        .myTooltiptextVisib {
+            visibility: visible;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .myTooltiptextInvisib {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+        }
+
+    </style>
+
+    <!-- ***************** Password length END ***************** -->
+
+    <!-- ***************** Password strength validator ***************** -->
+    <h2>Password Strength check</h2>
+
+    <form id="register">
+        <label for="password"><b>Password : </b></label>
+        <input name="password" id="password" type="password" placeholder="Type Your Password here" />&nbsp;&nbsp;
+        <span id="result"></span>
+        <input type="submit" id="myBtn">
+    </form>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#password').keyup(function() {
+                $('#result').html(checkStrength($('#password').val()))
+            })
+
+            function checkStrength(password) {
+                var strength = 0
+                if (password.length < 8) {
+                    $('#result').removeClass()
+                    $('#result').addClass('short')
+                    return 'min. 8 characters'
+                } else if (password.length > 30) {
+                    $('#result').removeClass()
+                    $('#result').addClass('long')
+                    return 'max. 30 characters'
+                }
+
+                if (password.length > 7) strength += 1
+                    // If password contains both lower and uppercase characters, increase strength value.             
+                if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+                    // If it has numbers and characters, increase strength value.
+                if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+                    // If it has one special character, increase strength value.
+                if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                    // If it has two special characters, increase strength value.
+                if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                    // Calculated strength value, we can return messages
+                    // If value is less than 2
+                if (strength < 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('weak')
+                    return 'Weak'
+                } else if (strength == 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('good')
+                    return 'Good'
+                } else {
+                    $('#result').removeClass()
+                    $('#result').addClass('strong')
+                    return 'Strong'
+                }
+            }
+        });
+
+    </script>
+
+
+
+    <style>
+        #register .short {
+            color: blue;
+            font-family: sans-serif;
+        }
+        
+        #register .long {
+            color: blue;
+            font-family: sans-serif;
+        }
+        
+        #register .weak {
+            color: deepskyblue;
+        }
+        
+        #register .good {
+            color: green;
+        }
+        
+        #register .strong {
+            color: red;
+            font-weight: bold;
+        }
+
+    </style>
+    <!-- ***************** Password strength END ***************** -->
+
+    <!-- ***************** Password length and strength validator ***************** -->
+    <h3>Password length and strength check (button enable/disable)</h3>
+
+
+    <label for="password"><b>Password : </b></label>
+    <input type="password" name="myPassw" id="myPassw" placeholder="Type Your Password here">&nbsp;&nbsp;
+    <p class="tooltipInvisib" id="myToolt">
+        <!--text comes here-->
+    </p>
+    <input type="submit" id="myButton">
+
+
+    <script>
+        //enable/disable button
+        $(document).ready(function() {
+            $(':input[id="myButton"]').prop('disabled', true);
+            $('input[name="myPassw"]').keyup(function() {
+                var text = $(this).val();
+                if (text.length > 7 && text.length < 31) {
+                    $(':input[id="myButton"]').prop('disabled', false)
+                } else {
+                    $(':input[id="myButton"]').prop('disabled', true);
+                }
+            });
+        });
+
+        //check strength and length
+        $(document).ready(function() {
+            $('#myPassw').keyup(function() {
+                $('#myToolt').html(checkStrength($('#myPassw').val()))
+            })
+
+            function checkStrength(password) {
+                var pass = password
+                var strength = 0
+                if (password.length > 0 && password.length < 8) {
+                    $('#myToolt').removeClass()
+                    $('#myToolt').addClass('tooltipVisib short')
+                    return 'min. 8 characters'
+                } else if (password.length > 30) {
+                    $('#myToolt').removeClass()
+                    $('#myToolt').addClass('tooltipVisib long')
+                    return 'max. 30 characters'
+                } else if (password.length == 0) {
+                    $('#myToolt').removeClass()
+                    $('#myToolt').addClass('tooltipInvisib')
+                }
+
+                if (password.length > 7) strength += 1
+                    // If password contains both lower and uppercase characters, increase strength value.             
+                if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+                    // If it has numbers and characters, increase strength value.
+                if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+                    // If it has one special character, increase strength value.
+                if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                    // If it has two special characters, increase strength value.
+                if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                    // Calculated strength value, we can return messages
+                    // If value is less than 2
+                if (strength < 2) {
+                    if (pass.length == 0) {
+                        $('#myToolt').removeClass()
+                        $('#myToolt').addClass('tooltipInvisib')
+                    } else {
+                        $('#myToolt').removeClass()
+                        $('#myToolt').addClass('tooltipVisib weak')
+                        return 'Weak'
+                    }
+                } else if (strength == 2) {
+                    $('#myToolt').removeClass()
+                    $('#myToolt').addClass('tooltipVisib good')
+                    return 'Good'
+                } else {
+                    $('#myToolt').removeClass()
+                    $('#myToolt').addClass('tooltipVisib strong')
+                    return 'Strong'
+                }
+            }
+        });
+
+    </script>
+
+
+
+    <style>
+        /* Tooltip text */
+        
+        .tooltipVisib {
+            visibility: visible;
+            min-width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 5px;
+            border-radius: 6px;
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .tooltipInvisib {
+            visibility: hidden;
+            min-width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 5px;
+            border-radius: 6px;
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .long {
+            color: white;
+        }
+        
+        .short {
+            color: white;
+        }
+        
+        .weak {
+            color: blue;
+        }
+        
+        .good {
+            color: green;
+        }
+        
+        .strong {
+            color: red;
+        }
+
+    </style>
+
+    <!-- ***************** Password length and strength END ***************** -->
+
+
+    <!--END OF Templates -->
+    <!--END OF Templates -->
+    <!--END OF Templates -->
+
+    <h1>----------------------------------------------------------------------</h1>
+    <h1>----------------------------------------------------------------------</h1>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
